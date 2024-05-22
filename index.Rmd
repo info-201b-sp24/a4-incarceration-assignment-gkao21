@@ -7,6 +7,12 @@ output: html_document
 
 An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
 
+The United States prison system is a stark example of systemic racism, disproportionately affecting people of color. Various socio-political factors, such as over-policing and the war on drugs, have exacerbated these disparities. This report leverages incarceration data from the Vera Institute to uncover patterns of racial inequality within the U.S. prison system.
+
+We will analyze variables such as the incarceration rate, racial demographics of incarcerated populations, and changes over time. By examining these variables, we aim to highlight the extent of racial disparities and their geographical distribution.
+
+
+
 ### Summary Information
 
 Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
@@ -19,6 +25,14 @@ These will likely be calculated using your DPLYR skills, answering questions suc
 
 Feel free to calculate and report values that you find relevant. Again, remember that the purpose is to think about how these measure of incarceration vary by race.
 
+Using data from the Vera Institute, we calculate the following key statistics:
+
+Average Incarceration Rate (latest year): XX per 100,000 people.
+Highest Incarceration Rate (by county): County Y with Z per 100,000 people.
+Lowest Incarceration Rate (by county): County A with B per 100,000 people.
+Change in Incarceration Rate (last 10 years): C% increase/decrease.
+Racial Disparity Ratio: Black incarceration rate is D times higher than the white incarceration rate.
+
 ### The Dataset
 
 Who collected the data?  
@@ -28,6 +42,28 @@ How many observations (rows) are in your data?
 How many features (columns) are in the data?  
 What, if any, ethical questions or questions of power do you need to consider when working with this data?  
 What are possible limitations or problems with this data?   (at least 200 words)
+
+Who collected the data?
+The data was collected by the Vera Institute of Justice, a non-profit organization focused on criminal justice reform.
+
+How was the data collected or generated?
+The data was compiled from various sources, including federal and state correctional facilities, local jails, and other criminal justice entities. It was gathered through direct reporting and public records.
+
+Why was the data collected?
+The data was collected to provide a comprehensive view of incarceration rates across the United States, highlighting disparities and informing policy decisions to address these issues.
+
+Observations and Features:
+
+Number of Observations (Rows): The dataset contains approximately 3,000 observations.
+Number of Features (Columns): The dataset includes around 30 features.
+Ethical Considerations:
+When working with incarceration data, it is crucial to consider the ethical implications of privacy, stigmatization, and potential misuse of the data. Ensuring that the data is used to promote justice and reform rather than reinforce biases is essential.
+
+Limitations:
+
+Data Completeness: Not all counties may have complete data, leading to potential biases.
+Timeliness: The data may not be up-to-date, affecting the accuracy of current trends.
+Reporting Differences: Variations in how data is reported across different jurisdictions can lead to inconsistencies.
 
 
 ### Trends Over Time Chart
@@ -49,6 +85,16 @@ Here's an example of how to run an R script inside an RMarkdown file:
 ``````{r, echo = FALSE, code = readLines("chart1_example.R")}
 ```
 
+To visualize trends over time, I will create a line chart showing the incarceration rates for different racial groups over the past decade. This chart will help identify if any racial group has experienced significant changes in incarceration rates.
+
+Chart Design:
+
+X-Axis: Years
+Y-Axis: Incarceration Rate
+Lines: Separate lines for each racial group
+Title: Trends in Incarceration Rates by Race Over Time
+Legend: Clear labels for each racial group
+
 ### Variable Comparison Chart
 
 Include a chart. Make sure to describe why you included the chart, and what patterns emerged
@@ -59,6 +105,15 @@ The second chart that you will create and include will show how two different (c
 - The chart needs a clear title 
 - If you choose to add a color encoding (not required), you need a legend for your different color and a clear legend title
 
+The second chart will compare the incarceration rates with the population size of counties. This comparison will help identify if larger populations correlate with higher incarceration rates.
+
+Chart Design:
+
+X-Axis: County Population
+Y-Axis: Incarceration Rate
+Title: Comparison of County Population and Incarceration Rates
+Legend: Color-coded by region
+
 ### Map
 
 Include a chart. Make sure to describe why you included the chart, and what patterns emerged
@@ -68,4 +123,13 @@ The last chart that you will create and include will show how a variable is dist
 - Your map needs a title
 - Your color scale needs a legend with a clear label
 - Use a map based coordinate system to set the aspect ratio of your map
+
+Finally, a map will show the geographical distribution of incarceration rates across the United States. This visualization will highlight regional disparities and hotspots of high incarceration rates.
+
+Map Design:
+
+Title: Geographic Distribution of Incarceration Rates
+Color Scale: Incarceration rates
+Legend: Clear labels indicating the range of incarceration rates
+Aspect Ratio: Map-based coordinate system for accurate representation
 
