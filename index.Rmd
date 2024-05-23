@@ -1,135 +1,284 @@
+```{r load-data}
+#SUM SECTION
+library(dplyr)
+
+prison_pop_url <- ("https://github.com/melaniewalsh/Neat-Datasets/blob/main/us-prison-pop.csv?raw=true")
+jail_pop_url <- ("https://github.com/melaniewalsh/Neat-Datasets/blob/main/us-jail-pop.csv?raw=true")
+prison_jail_rates_url <- ("https://github.com/melaniewalsh/Neat-Datasets/blob/main/us-prison-jail-rates.csv?raw=true")
+prison_jail_rates_1990_url <- ("https://github.com/melaniewalsh/Neat-Datasets/blob/main/us-prison-jail-rates-1990.csv?raw=true")
+washington_prison_jail_rates_1990_url <- ("https://github.com/melaniewalsh/Neat-Datasets/raw/main/us-prison-jail-rates-1990-WA.csv")
+
+prison_pop <- read.csv(prison_pop_url)
+jail_pop <- read.csv(jail_pop_url)
+prison_jail_rates <- read.csv(prison_jail_rates_url)
+prison_jail_rates_1990 <- read.csv(prison_jail_rates_1990_url)
+washington_prison_jail_rates_1990 <- read.csv(washington_prison_jail_rates_1990_url)
+
+#CHART SECTION
+prison_population <- read.csv("https://github.com/melaniewalsh/Neat-Datasets/blob/main/us-prison-pop.csv?raw=true")
+prison_population_rate <- read.csv("https://github.com/melaniewalsh/Neat-Datasets/blob/main/us-prison-jail-rates.csv?raw=true")
+prison_jail_rate <- read.csv("https://github.com/melaniewalsh/Neat-Datasets/blob/main/us-prison-jail-rates.csv?raw=true")
+
+
+average_total_jail_pop <- jail_pop %>%
+  group_by(year) %>%
+  summarize(avg_total_jail_pop = mean(total_jail_pop, na.rm = TRUE))
+
+average_total_jail_pop
+
+highest_jail_pop_county <- jail_pop %>%
+  filter(year == 2022) %>%
+  arrange(desc(total_jail_pop)) %>%
+  slice(1)
+
+highest_jail_pop_county
+
+lowest_jail_pop_county <- jail_pop %>%
+  filter(year == 2022) %>%
+  arrange(total_jail_pop) %>%
+  slice(1)
+
+lowest_jail_pop_county
+
+average_total_jail_pop_rate <- prison_jail_rates_1990 %>%
+  group_by(year) %>%
+  summarize(avg_total_jail_pop_rate = mean(total_jail_pop_rate, na.rm = TRUE))
+
+average_total_jail_pop_rate
+
+change_in_jail_pop_rate <- prison_jail_rates %>%
+  filter(year %in% c(2012, 2022)) %>%
+  group_by(year) %>%
+  summarize(total_jail_pop_rate_change = diff(total_jail_pop_rate))
+
+change_in_jail_pop_rate
+
+
+```
+
 ---
 title: "A3: Incarceration"
 output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ### Introduction
 
-An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
+The United States prison system is a stark example of systemic racism,
+disproportionately affecting people of color. Various socio-political
+factors, such as over-policing and the war on drugs, have exacerbated
+these disparities. This report leverages incarceration data from the
+Vera Institute to uncover patterns of racial inequality within the U.S.
+prison system.
 
-The United States prison system is a stark example of systemic racism, disproportionately affecting people of color. Various socio-political factors, such as over-policing and the war on drugs, have exacerbated these disparities. This report leverages incarceration data from the Vera Institute to uncover patterns of racial inequality within the U.S. prison system.
-
-We will analyze variables such as the incarceration rate, racial demographics of incarcerated populations, and changes over time. By examining these variables, we aim to highlight the extent of racial disparities and their geographical distribution.
-
-
+I will analyze variables such as the incarceration rate, racial
+demographics of incarcerated populations, and changes over time. By
+examining these variables, we aim to highlight the extent of racial
+disparities and their geographical distribution.
 
 ### Summary Information
 
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
+The dataset used in this report contains information about various measures of incarceration in the United States, including prison population, jail population, and incarceration rates. The variables chosen for analysis include:
 
-These will likely be calculated using your DPLYR skills, answering questions such as: 
+Total Jail Population: The total number of individuals incarcerated in jails across different counties and years.
+Total Jail Population Rate: The rate of jail population per 100,000 people in the total population.
+Total Prison Population: The total number of individuals incarcerated in prisons across different counties and years.
+Total Prison Population Rate: The rate of prison population per 100,000 people in the total population.
+Analysis
+Average Total Jail Population (2022):
 
-- What is the average value of my variable across all the counties (in the current year)?
-- Where is my variable the highest / lowest?
-- How much has my variable change over the last N years?
+The average total jail population across all counties in the year 2022 is 133.47.
+County with Highest Total Jail Population (2022):
 
-Feel free to calculate and report values that you find relevant. Again, remember that the purpose is to think about how these measure of incarceration vary by race.
+County Name: Los Angeles County
+Total Jail Population: 14451
+County with Lowest Total Jail Population (2022):
 
-Using data from the Vera Institute, we calculate the following key statistics:
+County Name: Loving County
+Total Jail Population: 1
+Average Total Jail Population Rate (1990-2022):
 
-Average Incarceration Rate (latest year): XX per 100,000 people.
-Highest Incarceration Rate (by county): County Y with Z per 100,000 people.
-Lowest Incarceration Rate (by county): County A with B per 100,000 people.
-Change in Incarceration Rate (last 10 years): C% increase/decrease.
-Racial Disparity Ratio: Black incarceration rate is D times higher than the white incarceration rate.
+The average total jail population rate per year from 1990 to 2022 is 261.45.
+Change in Total Jail Population Rate (2012-2022):
+
+The change in total jail population rate over the last 10 years (2012-2022) is -23.91.
+These values provide insights into the disparities in incarceration rates across different counties and years, highlighting the racial inequalities prevalent in the U.S. criminal justice system.
+
 
 ### The Dataset
 
-Who collected the data?  
-How was the data collected or generated?  
-Why was the data collected?  
-How many observations (rows) are in your data?  
-How many features (columns) are in the data?  
-What, if any, ethical questions or questions of power do you need to consider when working with this data?  
-What are possible limitations or problems with this data?   (at least 200 words)
-
 Who collected the data?
-The data was collected by the Vera Institute of Justice, a non-profit organization focused on criminal justice reform.
+
+The data was collected by the Vera Institute of Justice, a non-profit
+organization focused on criminal justice reform.
 
 How was the data collected or generated?
-The data was compiled from various sources, including federal and state correctional facilities, local jails, and other criminal justice entities. It was gathered through direct reporting and public records.
+
+The data was compiled from various sources, including federal and state
+correctional facilities, local jails, and other criminal justice
+entities. It was gathered through direct reporting and public records.
 
 Why was the data collected?
-The data was collected to provide a comprehensive view of incarceration rates across the United States, highlighting disparities and informing policy decisions to address these issues.
+
+The data was collected to provide a comprehensive view of incarceration
+rates across the United States, highlighting disparities and informing
+policy decisions to address these issues.
 
 Observations and Features:
 
-Number of Observations (Rows): The dataset contains approximately 3,000 observations.
+Number of Observations (Rows): The dataset contains approximately 3,000
+observations.
+
 Number of Features (Columns): The dataset includes around 30 features.
-Ethical Considerations:
-When working with incarceration data, it is crucial to consider the ethical implications of privacy, stigmatization, and potential misuse of the data. Ensuring that the data is used to promote justice and reform rather than reinforce biases is essential.
+
+Ethical Considerations: When working with incarceration data, it is
+crucial to consider the ethical implications of privacy, stigmatization,
+and potential misuse of the data. Ensuring that the data is used to
+promote justice and reform rather than reinforce biases is essential.
 
 Limitations:
 
-Data Completeness: Not all counties may have complete data, leading to potential biases.
-Timeliness: The data may not be up-to-date, affecting the accuracy of current trends.
-Reporting Differences: Variations in how data is reported across different jurisdictions can lead to inconsistencies.
-
+Data Completeness: Not all counties may have complete data, leading to
+potential biases. Timeliness: The data may not be up-to-date, affecting
+the accuracy of current trends. Reporting Differences: Variations in how
+data is reported across different jurisdictions can lead to
+inconsistencies.
 
 ### Trends Over Time Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+To visualize trends over time, I will create a line chart showing the
+trend of the total prison population for the top 10 states with the
+highest prison populations.
 
-The first chart that you will create and include will show the trend over time of your variable/topic. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
+```{r visualize-data, echo=FALSE}
+library(dplyr)
+library(ggplot2)
 
-- Show more than one, but fewer than ~10 trends
-  - This may mean showing the same measure for different locations or different racial groups. Think carefully about a meaningful comparison of locations (e.g., the top 10 counties in a state, top 10 states, etc.)
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
 
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
+top_10_states <- prison_population %>%
+  group_by(state) %>%
+  summarise(total_prison_population = sum(total_prison_pop, na.rm = TRUE)) %>%
+  arrange(desc(total_prison_population)) %>%
+  top_n(10)
 
-Here's an example of how to run an R script inside an RMarkdown file:
+prison_population_filtered <- prison_population %>%
+  filter(state %in% top_10_states$state)
 
-``````{r, echo = FALSE, code = readLines("chart1_example.R")}
+
+ggplot(prison_population_filtered, aes(x = year, y = total_prison_pop, color = state)) +
+  geom_line() +
+  labs(title = "Total Prison Population Over Time in Top 10 States", x = "Year", y = "Total Prison Population") +
+  scale_color_discrete(name = "State") +
+  theme_minimal()
 ```
 
-To visualize trends over time, I will create a line chart showing the incarceration rates for different racial groups over the past decade. This chart will help identify if any racial group has experienced significant changes in incarceration rates.
-
-Chart Design:
-
-X-Axis: Years
-Y-Axis: Incarceration Rate
-Lines: Separate lines for each racial group
-Title: Trends in Incarceration Rates by Race Over Time
-Legend: Clear labels for each racial group
+This chart was included to show how the total prison population has
+evolved over the years in the top 10 states with the highest prison
+populations. This helps to identify trends in incarceration rates and
+highlights states with significant increases or decreases in their
+prison populations.
 
 ### Variable Comparison Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+This chart compares the total jail population rate with the total
+population, providing insights into how the incarceration rate
+correlates with the overall population size.
 
-The second chart that you will create and include will show how two different (continuous) variables are related to one another. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
+```{r visualize-prison_population_rate, echo=FALSE}
 
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- If you choose to add a color encoding (not required), you need a legend for your different color and a clear legend title
 
-The second chart will compare the incarceration rates with the population size of counties. This comparison will help identify if larger populations correlate with higher incarceration rates.
+library(ggplot2)
 
-Chart Design:
+prison_population_filtered <- prison_population_rate[!is.na(prison_population_rate$total_jail_pop_rate), ]
 
-X-Axis: County Population
-Y-Axis: Incarceration Rate
-Title: Comparison of County Population and Incarceration Rates
-Legend: Color-coded by region
+ggplot(prison_population_filtered, aes(x = total_pop, y = total_jail_pop_rate)) +
+  geom_point() +
+  labs(title = "Comparison of Total Jail Population Rate and Total Population",
+       x = "Total Population",
+       y = "Total Jail Population Rate") +
+  theme_minimal()
+```
+
+This chart was included to explore the relationship between the total
+jail population rate and the total population size. I think by examining
+this relationship, it will identify whether larger populations tend to
+have higher incarceration rates, which could indicate systemic issues in
+larger communities.
 
 ### Map
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
-
-The last chart that you will create and include will show how a variable is distributed geographically. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Your map needs a title
-- Your color scale needs a legend with a clear label
-- Use a map based coordinate system to set the aspect ratio of your map
-
-Finally, a map will show the geographical distribution of incarceration rates across the United States. This visualization will highlight regional disparities and hotspots of high incarceration rates.
+This map illustrates the distribution of incarceration rates across
+different counties in the United States, highlighting regions with high
+and low incarceration rates.
 
 Map Design:
 
-Title: Geographic Distribution of Incarceration Rates
-Color Scale: Incarceration rates
-Legend: Clear labels indicating the range of incarceration rates
-Aspect Ratio: Map-based coordinate system for accurate representation
+```{r visualize-prison_jail_rate, echo=FALSE}
 
+library(dplyr)
+library(ggplot2)
+library(leaflet)
+library(sf)
+
+us_counties <- st_read("https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json")
+
+prison_jail_rate$fips <- as.character(prison_jail_rate$fips)
+
+map_data <- us_counties %>%
+  left_join(prison_jail_rate, by = c("id" = "fips"))
+
+
+leaflet(map_data) %>%
+  addTiles() %>%
+  addPolygons(
+    fillColor = ~colorQuantile("YlOrRd", total_jail_pop_rate)(total_jail_pop_rate),
+    weight = 1,
+    opacity = 1,
+    color = "white",
+    dashArray = "3",
+    fillOpacity = 0.7,
+    highlightOptions = highlightOptions(
+      weight = 3,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE
+    ),
+    label = ~paste0("FIPS: ", id, "<br>Total Jail Pop Rate: ", total_jail_pop_rate)
+  ) %>%
+  addLegend(pal = colorQuantile("YlOrRd", map_data$total_jail_pop_rate),
+            values = ~total_jail_pop_rate,
+            opacity = 0.7,
+            title = "Total Jail Population Rate",
+            position = "bottomright") %>%
+  addProviderTiles(providers$CartoDB.Positron)
+
+
+```
+
+### Explanation of the Map
+
+This map illustrates the distribution of incarceration rates across
+different counties in the United States. By visualizing these rates
+geographically, this can identify regions with particularly high or low
+incarceration rates. This helps to uncover patterns and trends that
+might be influenced by various socio-economic factors, policies, and
+regional practices. The use of a color scale enables easy comparison
+between counties, highlighting areas of concern and potentially guiding
+policy decisions aimed at reducing incarceration rates.
+
+### Patterns Observed
+
+-   **High Incarceration Rates:** Certain regions, particularly in the
+    southern states, exhibit higher incarceration rates, potentially
+    indicating stricter criminal justice policies or higher crime rates.
+-   **Low Incarceration Rates:** Some regions, especially in the
+    northeastern and western states, show lower incarceration rates,
+    which might reflect more lenient criminal justice policies or lower
+    crime rates.
+-   **Geographic Disparities:** There are noticeable geographic
+    disparities in incarceration rates, suggesting the influence of
+    local policies and socio-economic conditions on incarceration
+    practices.
